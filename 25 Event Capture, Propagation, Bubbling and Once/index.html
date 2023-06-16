@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Understanding JavaScript's Capture</title>
+  </head>
+  <body class="bod">
+
+    <div class="one">
+      <div class="two">
+        <div class="three">
+        </div>
+      </div>
+    </div>
+
+    <style>
+      html {
+        box-sizing: border-box;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      div {
+        width: 100%;
+        padding: 100px;
+      }
+
+      .one {
+        background: thistle;
+      }
+
+      .two {
+        background: mistyrose;
+      }
+
+      .three {
+        background: coral;
+      }
+
+    </style>
+
+    <button>
+
+    </button>
+    <script>
+      // const divs = document.querySelectorAll('div');
+
+      function logTextB(e) {
+        console.log(e.eventPhase);
+        console.log(`bubbling this:`);
+        console.log(this);
+        // console.log(`e.target`);
+        // console.log(e.target);
+        // console.log(`e.currentTarget`);
+        // console.log(e.currentTarget);
+      }
+
+      function logTextC(e) {
+        console.log(e.eventPhase);
+        console.log(`capture this:`);
+        console.log(this);
+        // console.log(`e.target`);
+        // console.log(e.target);
+        // console.log(`e.currentTarget`);
+        // console.log(e.currentTarget);
+      }
+
+      // divs.forEach(div => div.addEventListener('click', logText, {
+      //   capture: false
+      // }));
+
+      const two = document.querySelector('.two');
+      two.addEventListener('click', logTextC, {capture: true});
+      two.addEventListener('click', logTextB);
+      const three = document.querySelector('.three');
+      three.addEventListener('click', logTextC, {capture: true});
+      three.addEventListener('click', logTextB);
+      const body = document.querySelector('body');
+      body.addEventListener('click', logTextC, {capture: true});
+      body.addEventListener('click', logTextB);
+      const one = document.querySelector('.one');
+      one.addEventListener('click', logTextC, {capture: true});
+      one.addEventListener('click', logTextB);
+      const html = document.querySelector('html');
+      html.addEventListener('click', logTextC, {capture: true});
+      html.addEventListener('click', logTextB);
+
+      // document.addEventListener('click', logText);
+      // document.body.addEventListener('click', logText);
+
+
+    </script>
+  </body>
+</html>
